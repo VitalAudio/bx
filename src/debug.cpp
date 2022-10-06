@@ -8,6 +8,10 @@
 #include <bx/readerwriter.h> // WriterI
 #include <inttypes.h>        // PRIx*
 
+#ifdef BX_CUSTOM_DEBUG
+  extern "C" void __stdcall BX_CUSTOM_DEBUG(const char* _str);
+#endif
+
 #if BX_CRT_NONE
 #	include "crt0.h"
 #elif BX_PLATFORM_ANDROID
@@ -55,7 +59,9 @@ namespace bx
 
 	void debugOutput(const char* _out)
 	{
-#if BX_CRT_NONE
+#if BX_CUSTOM_DEBUG
+    BX_CUSTOM_DEBUG(_out);
+#elif BX_CRT_NONE
 		crt0::debugOutput(_out);
 #elif BX_PLATFORM_ANDROID
 #	ifndef BX_ANDROID_LOG_TAG
