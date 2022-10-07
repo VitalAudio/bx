@@ -9,7 +9,7 @@
 #include <inttypes.h>        // PRIx*
 
 #ifdef BX_CUSTOM_DEBUG
-  extern "C" void __stdcall BX_CUSTOM_DEBUG(const char* _str);
+  bool BX_CUSTOM_DEBUG(const char* _str);
 #endif
 
 #if BX_CRT_NONE
@@ -59,7 +59,7 @@ namespace bx
 
 	void debugOutput(const char* _out)
 	{
-#if BX_CUSTOM_DEBUG
+#ifdef BX_CUSTOM_DEBUG
     BX_CUSTOM_DEBUG(_out);
 #elif BX_CRT_NONE
 		crt0::debugOutput(_out);
